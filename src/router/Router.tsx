@@ -5,6 +5,7 @@ import path from "path";
 import { SignUpForm } from "../pages/auth/SignUp";
 import { SignInForm } from "../pages/auth/SignIn";
 import ExploreMore from "../pages/auth/ExploreMore";
+import CreateReciepes from "../pages/CreateReciepes";
 
 export const Router = createBrowserRouter([
   {
@@ -29,5 +30,9 @@ export const Router = createBrowserRouter([
   {
     path: "/exploremore",
     element: <ExploreMore />,
+  },
+  {
+    path: "/create",
+    element: <CreateReciepes />,
   },
 ]);

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { RxAvatar } from "react-icons/rx";
-import { MdOutlineNotificationsNone } from "react-icons/md";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 export default function PageLayout() {
@@ -30,10 +29,7 @@ export default function PageLayout() {
       <nav className="hidden md:block ">
         <ul className="flex items-center justify-evenly min-w-[600px]  ">
           <li>
-            <a href="">All Reciepes</a>
-          </li>
-          <li>
-            <a href="">Create Reciepes</a>
+            <a href="/create">Create Reciepes</a>
           </li>
           <li>
             <a href="">View my Reciepes</a>
