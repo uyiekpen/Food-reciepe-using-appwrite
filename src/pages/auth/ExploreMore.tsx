@@ -40,7 +40,7 @@ const ExploreMore = (props: Props) => {
                 <div className="">
                   <img
                     className="  object-contain w-auto h-auto"
-                    src="/images/img.jpg"
+                    src={item.image}
                     alt="img.jpg"
                   />
                 </div>

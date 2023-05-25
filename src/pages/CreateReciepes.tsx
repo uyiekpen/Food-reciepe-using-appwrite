@@ -1,35 +1,61 @@
 import React, { useState } from "react";
 import PageLayout from "../Components/pageLayout";
-import { databases } from "../Api/api";
-import { Permission, Role } from "appwrite";
+import { databases, storage } from "../Api/api";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {};
 
 const CreateReciepes = (props: Props) => {
-  const [tittle, setTittle] = useState("");
-  const [image, setImage] = useState("");
   const [method, setMethod] = useState("");
   const [ingredient, setIngredient] = useState("");
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const promise = databases.createDocument(
-      "646cb6c47bc7998e9c74",
-      "646cb6d530a1039b7b3e",
-      "646dd80851e159e92dd6",
-      {image,  tittle, method, ingredient },
-      // [Permission.update(Role.any())]
-    );
-    promise.then(
-      function (response) {
-        console.log(response);
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+  const [image, setImage] = useState<File | null>(null);
+  const [tittle, setTittle] = useState("");
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    setImage(file || null);
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!image || !tittle) {
+      console.log("Please select an image and enter a title");
+      return;
+    }
+
+    try {
+      const documentId = uuidv4(); // Generate a unique ID for the document
+
+      // Upload the file to Appwrite storage
+      const fileResult = await storage.createFile(
+        "646f194a7bba7e4fdbdd",
+        documentId,
+        image
+      );
+      const fileId = fileResult.$id;
+
+      // Create a document in Appwrite database
+      const response = await databases.createDocument(
+        "646cb6c47bc7998e9c74",
+        "646f1e990583375ff5d2",
+        documentId,
+        { tittle, image: fileId, method, ingredient }
+        // [Permission.update(Role.any())]
+      );
+
+      console.log("Upload successful:", response);
+
+      // Reset form fields
+      setImage(null);
+      setTittle("");
+      setMethod("");
+      setIngredient("");
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
+  };
   return (
     <div>
       <PageLayout />
@@ -53,12 +79,11 @@ const CreateReciepes = (props: Props) => {
                 <div className="mt-1">
                   <input
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    id="image"
                     type="file"
-                    value={image}
-                    onChange={(e) => {
-                      setImage(e.target.value);
-                    }}
+                    onChange={handleFileChange}
+                    // onChange={(e) => {
+                    //   setImage(e.target.value);
+                    // }}
                   />
                 </div>
               </div>

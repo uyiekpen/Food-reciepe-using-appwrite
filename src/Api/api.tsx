@@ -1,4 +1,4 @@
-import { Client, Databases, Account } from "appwrite";
+import { Client, Databases, Account, Storage } from "appwrite";
 
 const client = new Client();
 
@@ -12,36 +12,7 @@ export const account = new Account(client);
 
 export const databases = new Databases(client);
 
-// type ApiProps = {
-//   sdk: null | any;
-//   provider: () => any;
-//   createAccount: any;
-// };
+//storage
 
-// let api: ApiProps = {
-//   sdk: null,
+export const storage = new Storage(client)
 
-//   provider: () => {
-//     if (api.sdk) {
-//       return api.sdk;
-//     }
-//     let appwrite = new Appwrite();
-//     appwrite
-//       .setEndpoint("https://cloud.appwrite.io/v1")
-//       .setProject("646badc9f3da5e35cac5");
-//     const account = new Account(appwrite);
-//     const database = new Databases(appwrite);
-
-//     api.sdk = { database, account };
-//     return api.sdk;
-//   },
-
-//   createAccount: (email: "string", password: number, name: string) => {
-//     return api.provider().account.create("unique()", email, password, name);
-//   },
-// };
-
-// export default api;
-
-// // .setEndpoint("https://cloud.appwrite.io/v1")
-// //   .setProject("646badc9f3da5e35cac5");
