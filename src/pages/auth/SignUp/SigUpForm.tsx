@@ -1,39 +1,37 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {v4 as uuidv4} from 'uuid'
-import { account } from '../../../Api/api'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
+import { account } from "../../../Api/api";
 
 function Signup() {
-    const navigate = useNavigate()
-    const [user, setUser] = useState({
-        name: "",
-        email: "",
-        password: ""
-    })
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    //Signup 
-    const signupUser = async (e: any) => {
-        e.preventDefault()
+  //Signup
+  const signupUser = async (e: any) => {
+    e.preventDefault();
 
-        const promise = account.create(
-            uuidv4(),
-            user.email,
-            user.password,
-            user.name
-        );
+    const promise = account.create(
+      uuidv4(),
+      user.email,
+      user.password,
+      user.name
+    );
 
-        promise.then(
-            function(response){
-                console.log(response);
-                navigate("/exploremore") //success
-            },
-            function(error) {
-                console.log(error); // Failure
-            }
-        )
-
-
-    }
+    promise.then(
+      function (response) {
+        console.log(response);
+        navigate("/exploremore"); //success
+      },
+      function (error) {
+        console.log(error); // Failure
+      }
+    );
+  };
 
   return (
     <>
@@ -58,10 +56,10 @@ function Signup() {
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     onChange={(e) => {
-                        setUser({
-                            ...user,
-                            name: e.target.value
-                        })
+                      setUser({
+                        ...user,
+                        name: e.target.value,
+                      });
                     }}
                   />
                 </div>
@@ -80,12 +78,12 @@ function Signup() {
                     type="email"
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     onChange={(e) => {
-                        setUser({
-                            ...user,
-                            email: e.target.value
-                        })
+                      setUser({
+                        ...user,
+                        email: e.target.value,
+                      });
                     }}
-                    />
+                  />
                 </div>
               </div>
 
@@ -105,10 +103,10 @@ function Signup() {
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     onChange={(e) => {
-                        setUser({
-                            ...user,
-                            password: e.target.value
-                        })
+                      setUser({
+                        ...user,
+                        password: e.target.value,
+                      });
                     }}
                   />
                 </div>
@@ -201,8 +199,8 @@ function Signup() {
           </div>
         </div>
       </div>
-</>
-  )
+    </>
+  );
 }
 
-export default Signup
+export default Signup;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PageLayout from "../Components/pageLayout";
 import { databases } from "../Api/api";
+import { Permission, Role } from "appwrite";
 
 type Props = {};
 
@@ -16,8 +17,8 @@ const CreateReciepes = (props: Props) => {
       "646cb6c47bc7998e9c74",
       "646cb6d530a1039b7b3e",
       "646dd80851e159e92dd6",
-      {},
-      []
+      {image,  tittle, method, ingredient },
+      // [Permission.update(Role.any())]
     );
     promise.then(
       function (response) {
@@ -30,7 +31,7 @@ const CreateReciepes = (props: Props) => {
   };
 
   return (
-    <>
+    <div>
       <PageLayout />
       <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="text-center text-2xl font-bold">Post Reciepes</div>
@@ -140,7 +141,7 @@ const CreateReciepes = (props: Props) => {
           </div>
         </div>
       </div>{" "}
-    </>
+    </div>
   );
 };
 
