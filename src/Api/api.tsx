@@ -6,12 +6,11 @@ client
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject("646badc9f3da5e35cac5");
 
+export const account = new Account(client);
 
-  export const account = new Account(client)
+//Database
 
-  //Database
-
-  export const databases = new Databases(client)
+export const databases = new Databases(client);
 
 // type ApiProps = {
 //   sdk: null | any;
