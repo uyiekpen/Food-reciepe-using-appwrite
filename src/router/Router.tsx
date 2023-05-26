@@ -6,6 +6,7 @@ import { SignInForm } from "../pages/auth/SignIn";
 import ExploreMore from "../pages/ExploreMore";
 import CreateReciepes from "../pages/CreateReciepes";
 import PrivateRoute from "../privateRoute/PrivateRoute";
+import RecipeDetailsPage from "../pages/detailspage/DetailPage";
 
 export const Router = createBrowserRouter([
   {
@@ -37,5 +38,9 @@ export const Router = createBrowserRouter([
   {
     path: "/create",
     element: <CreateReciepes />,
+  },
+  {
+    path: "/detail",
+    element: <RecipeDetailsPage />,
   },
 ]);
