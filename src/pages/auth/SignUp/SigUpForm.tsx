@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { account } from "../../../Api/api";
+import { useDispatch } from "react-redux";
+import { setUserdata } from "../../../global/reducer";
 
 function Signup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -25,6 +28,7 @@ function Signup() {
     promise.then(
       function (response) {
         console.log(response);
+        dispatch(setUserdata(response));
         navigate("/exploremore"); //success
       },
       function (error) {
@@ -122,6 +126,14 @@ function Signup() {
                 </button>
               </div>
             </form>
+            <div className="mt-1">
+              <p className="capitalize">
+                already have an account{" "}
+                <span className="text-red-800 font-semibold">
+                  <a href="/signin">Sign in</a>
+                </span>
+              </p>
+            </div>
 
             <div className="mt-6">
               <div className="relative">

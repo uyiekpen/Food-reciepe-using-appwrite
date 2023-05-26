@@ -1,16 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Components/layout/MainLayout";
 import Home from "../pages/Home";
-import path from "path";
 import { SignUpForm } from "../pages/auth/SignUp";
 import { SignInForm } from "../pages/auth/SignIn";
-import ExploreMore from "../pages/auth/ExploreMore";
+import ExploreMore from "../pages/ExploreMore";
 import CreateReciepes from "../pages/CreateReciepes";
+import PrivateRoute from "../privateRoute/PrivateRoute";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
     children: [
       {
         index: true,
@@ -29,7 +28,11 @@ export const Router = createBrowserRouter([
   },
   {
     path: "/exploremore",
-    element: <ExploreMore />,
+    element: (
+      <PrivateRoute>
+        <ExploreMore />
+      </PrivateRoute>
+    ),
   },
   {
     path: "/create",

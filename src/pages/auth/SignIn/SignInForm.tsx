@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { account } from "../../../Api/api";
+import { useDispatch } from "react-redux";
+import { setUserdata } from "../../../global/reducer";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  const loginUser = async (e: any) => {
+  const loginUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await account.createEmailSession(user.email, user.password);
+      const loggedInUser = { email: user.email }; // Create a user object with relevant data
+      dispatch(setUserdata(loggedInUser));
       navigate("/exploremore");
     } catch (error) {
       console.log(error);
