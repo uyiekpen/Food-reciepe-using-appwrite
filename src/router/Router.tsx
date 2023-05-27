@@ -40,7 +40,7 @@ export const Router = createBrowserRouter([
     element: <CreateReciepes />,
   },
   {
-    path: "/detail",
+    path: "/detail/:id",
     element: <RecipeDetailsPage />,
   },
 ]);
