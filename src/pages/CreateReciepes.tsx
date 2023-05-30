@@ -3,9 +3,13 @@ import PageLayout from "../Components/pageLayout";
 import { databases, storage } from "../Api/api";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchRecipesStart } from "../global/reciepeReducer";
 
 const CreateRecipes = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [recipeTitle, setRecipeTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -30,7 +34,9 @@ const CreateRecipes = () => {
     }
 
     try {
+    
       const documentId = uuidv4(); // Generate a unique ID for the document
+        console.log("Generated document ID:", documentId);
 
       // Upload the file to Appwrite storage
       const fileResult = await storage.createFile(

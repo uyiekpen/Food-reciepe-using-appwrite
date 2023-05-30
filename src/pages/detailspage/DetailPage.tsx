@@ -4,7 +4,7 @@ import { databases } from "../../Api/api";
 
 interface Recipe {
   id: string;
-  title: string;
+  recipeTitle: string;
   ingredients: string[];
   instructions: string[];
   cookingTime: string;
@@ -26,40 +26,47 @@ const RecipeDetailsPage: React.FC = () => {
     const fetchRecipeDetails = async () => {
       try {
         if (id) {
-          // Add a conditional check to ensure id is defined
           const response = await databases.getDocument(
             "646cb6c47bc7998e9c74",
             "646f1e990583375ff5d2",
             id
           );
-          setRecipe(response.documents);
-          console.log(response.documents);
+          setRecipe(response.document);
         }
       } catch (error) {
+        setError("Error fetching recipe details");
         console.error("Error fetching recipe details:", error);
       }
     };
 
     fetchRecipeDetails();
   }, [id]);
-  console.log(recipe);
-  if (error) {
-    return (
-      <div className="container mx-auto p-4">
-        <h1>Error</h1>
-        <p>{error}</p>
-      </div>
-    );
-  }
 
-  if (!recipe) {
-    return <div>Loading...</div>; // You can display a loading indicator while the data is being fetched
-  }
 
   return (
     <div className="container mx-auto p-3">
-      <h1 className="text-2xl font-bold mb-4">{recipe.title}</h1>
-      {/* Display the rest of the recipe details */}
+      <h1 className="text-2xl font-bold mb-4">{recipe.recipeTitle} </h1>
+      <div>
+        <h2>Ingredients:</h2>
+        <ul>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Instructions:</h2>
+        <ol>
+          {recipe.instructions.map((instruction, index) => (
+            <li key={index}>{instruction}</li>
+          ))}
+        </ol>
+      </div>
+      <div>
+        <h2>Cooking Time:</h2>
+        <p>{recipe.cookingTime}</p>
+      </div>
+      {/* Display additional recipe details as needed */}
     </div>
   );
 };

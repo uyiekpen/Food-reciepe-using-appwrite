@@ -5,6 +5,8 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 export default function PageLayout() {
   const [toggle, setToggle] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<any>([]);
 
   const handleToggle = (event: any) => {
     event.preventDefault();

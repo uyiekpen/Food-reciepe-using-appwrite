@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import OtherPagesNav from "../Components/pageLayout";
 import { databases, storage } from "../Api/api";
 import RecipeCard from "../Components/ui/RecipeCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const ExploreMore: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
@@ -30,7 +31,7 @@ const ExploreMore: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4">Browse Recipes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.map((item) => (
-            <Link to={`/detail/${item.id}`} key={item.id}>
+            <Link to={`/detail/${item.$id}`} key={item.$id}>
               <RecipeCard recipe={item} />
             </Link>
           ))}

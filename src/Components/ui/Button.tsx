@@ -1,5 +1,5 @@
 import { ClipLoader } from 'react-spinners';
-import { cn } from '../../libs/utils';
+import { cn } from '../../global/libs/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 
 import React, { HTMLAttributes, forwardRef } from 'react';
