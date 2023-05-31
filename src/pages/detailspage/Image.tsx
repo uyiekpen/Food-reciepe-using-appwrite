@@ -7,9 +7,11 @@ interface RecipeImageProps {
 
 const RecipeImage: React.FC<RecipeImageProps> = ({ imageUrl, altText }) => {
   return (
-    <div className="recipe-image">
-      <img src={imageUrl} alt={altText} className="w-full mb-4 rounded-lg" />
-    </div>
+    <div className="min-h-[300px]">
+    <img src={imageUrl} alt={altText} className="w-full mb-4 rounded-lg object-contain shadow-sm" style={{ maxHeight: '300px' , maxWidth: "500px"}} />
+  </div>
+  
+  
   );
 };
 
