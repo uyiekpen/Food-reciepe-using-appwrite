@@ -13,7 +13,7 @@ interface RecipeReviewsProps {
 
 const RecipeReviews: React.FC<RecipeReviewsProps> = ({ reviews }) => {
   return (
-    <div className="reviews">
+    <div className="bg-white rounded-lg shadow-md p-4">
       <h2 className="text-2xl font-bold mb-4">User Reviews</h2>
       {reviews.map((review, index) => (
         <div key={index} className="review">

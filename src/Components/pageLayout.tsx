@@ -16,7 +16,7 @@ export default function PageLayout() {
   return (
     <header className="flex justify-between items-center px-8 bg-reciepeGreen text-white w-full h-20 z-10 font-poppins">
       <div>FoodRecipes..</div>
-      <label className="relative md:block hidden md:min-w-[400px]">
+      {/* <label className="relative md:block hidden md:min-w-[400px]">
         <span className="sr-only">Search</span>
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
           <BiSearchAlt2 />
@@ -27,9 +27,9 @@ export default function PageLayout() {
           type="text"
           name="search"
         />
-      </label>
+      </label> */}
       <nav className="hidden md:block ">
-        <ul className="flex items-center justify-evenly min-w-[600px]  ">
+        <ul className="flex items-center justify-evenly min-w-[800px]  ">
           <li>
             <a href="/create">Create Reciepes</a>
           </li>
@@ -37,10 +37,16 @@ export default function PageLayout() {
             <a href="">View my Reciepes</a>
           </li>
           <li>
-            <a href="" className="flex">
-              <RxAvatar />
+            <a href="">Saved Reciepes</a>
+          </li>
+
+          <li className="">
+            <a href="" className="font-semibold text-white flex items-center ">
+              <span>
+                <RxAvatar size={20} />
+              </span>
+              <span className="ml-2">Osazie</span>
             </a>
-            <span>osazie</span>
           </li>
         </ul>
       </nav>
@@ -56,19 +62,32 @@ export default function PageLayout() {
           }`}
         >
           <ul className="">
-            <li>
-              <a href="/create" className="font-bold text-ranoRed">
+            <li className="border-b-[1px] border-reciepeGreen  py-2 px-2">
+              <a href="/create" className="font-semibold text-reciepeGreen">
                 Create Recipes
               </a>
             </li>
-            <li>
-              <a href="">View My Recipes</a>
-            </li>
-            <li>
-              <a href="">
-                <RxAvatar />
+            <li className="border-b-[1px] border-reciepeGreen  py-2 px-2">
+              <a href="" className="font-semibold text-reciepeGreen">
+                View My Recipes
               </a>
-              <span>osazie</span>
+            </li>
+            <li className="border-b-[1px] border-reciepeGreen  py-2 px-2">
+              <a href="" className="font-semibold text-reciepeGreen">
+                <span>Saved Recipe</span>
+              </a>
+            </li>
+
+            <li className="border-b-[1px] border-reciepeGreen  py-2 px-2">
+              <a
+                href=""
+                className="font-semibold text-reciepeGreen flex items-center "
+              >
+                <span>
+                  <RxAvatar size={20} />
+                </span>
+                <span className="ml-2">Osazie</span>
+              </a>
             </li>
           </ul>
         </nav>

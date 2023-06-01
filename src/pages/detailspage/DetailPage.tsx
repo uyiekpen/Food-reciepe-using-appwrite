@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { databases } from "../../Api/api";
-import PageLayout from "../../Components/pageLayout";
 import RecipeImage from "./Image";
 import ReciepeCategory from "./ReciepeCategory";
 import ServingSize from "./ServingSize";
@@ -9,6 +8,10 @@ import DietaryPreferences from "./dietaryPreferences";
 import RecipeIngredients from "./ingredients";
 import RecipeInstructions from "./instructions";
 import RecipeCookingTime from "./time";
+import RecipeReviews from "./reciepeReview";
+import PageLayout from "../../Components/pageLayout";
+import Footer from "../../Components/Footer";
+import { v4 as uuidV4 } from "uuid";
 
 interface Recipe {
   id: string;
@@ -28,6 +31,20 @@ interface Review {
   rating: number;
   comment: string;
 }
+
+const reviews = [
+  {
+    rating: 4,
+    comment: "Great recipe! I loved the flavors.",
+    name: "John Doe",
+  },
+  {
+    rating: 5,
+    comment: "Amazing dish! Will definitely make it again.",
+    name: "Jane Smith",
+  },
+  // Add more review objects as needed
+];
 
 const RecipeDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -96,6 +113,31 @@ const RecipeDetailsPage: React.FC = () => {
     fetchRecipeDetails();
   }, [id]);
 
+  const saveRecipe = async (event: React.MouseEvent<HTMLDivElement>) => {
+    const recipe = event.currentTarget.dataset.recipe;
+
+    try {
+      const id = uuidV4(); // Replace with a valid unique identifier for the recipe
+
+      if (id && recipe) {
+        const response = await databases.createDocument(
+          "646cb6c47bc7998e9c74",
+          "646f1e990583375ff5d2",
+          id,
+          {
+            recipeTitle: recipe, // Provide the recipe data as the 'data' parameter
+          }
+        );
+
+        console.log("Recipe saved:", response);
+      } else {
+        console.error("Invalid recipe ID or recipe data");
+      }
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+    }
+  };
+
   return (
     <>
       <PageLayout />
@@ -105,14 +147,15 @@ const RecipeDetailsPage: React.FC = () => {
             <h1 className="text-2xl font-bold mb-4 text-left">
               {recipe.recipeTitle}
             </h1>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <RecipeImage
                   imageUrl={recipe.image}
                   altText={recipe.recipeTitle}
                 />
+                <div onClick={saveRecipe}>Save</div>
               </div>
-              <div className="bg-white rounded-lg p-4 grid grid-cols-2 gap-2">
+              <div className="bg-white rounded-lg p-4 grid grid-cols-2 gap-2 md:grid-cols-2">
                 <RecipeCookingTime cookingTime={recipe.cookingTime} />
                 <ReciepeCategory category={recipe.recipeCategory} />
                 <ServingSize serving={recipe.servingSize} />
@@ -121,6 +164,7 @@ const RecipeDetailsPage: React.FC = () => {
                 />
               </div>
             </div>
+
             <div className="mt-4">
               <RecipeIngredients ingredients={recipe.ingredients} />
             </div>
@@ -128,7 +172,7 @@ const RecipeDetailsPage: React.FC = () => {
               <RecipeInstructions instructions={recipe.instructions} />
             </div>
 
-            {/* Display additional recipe details as needed */}
+            <RecipeReviews reviews={reviews} />
           </>
         ) : error ? (
           <div>{error}</div>
@@ -136,6 +180,7 @@ const RecipeDetailsPage: React.FC = () => {
           <div>Loading...</div>
         )}
       </div>
+      <Footer />
     </>
   );
 };

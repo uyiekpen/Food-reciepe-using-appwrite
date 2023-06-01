@@ -4,6 +4,7 @@ import { databases, storage } from "../Api/api";
 import RecipeCard from "../Components/ui/RecipeCard";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import Footer from "../Components/Footer";
 
 const ExploreMore: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
@@ -25,9 +26,9 @@ const ExploreMore: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <OtherPagesNav />
-      <div className="container mx-auto p-3">
+      <div className="container mx-auto p-3 flex-grow">
         <h1 className="text-2xl font-bold mb-4">Browse Recipes</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.map((item) => (
@@ -37,7 +38,8 @@ const ExploreMore: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
