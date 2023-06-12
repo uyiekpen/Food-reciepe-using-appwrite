@@ -2,11 +2,29 @@ import React, { useState } from "react";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { RxAvatar } from "react-icons/rx";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { account } from "../Api/api";
 
 export default function PageLayout() {
   const [toggle, setToggle] = useState(false);
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState<any>([]);
+  const [name, setName] = useState<string | null>(null);
+
+  const fetchAccountName = async () => {
+    try {
+      const response = await account.get();
+      const name = response.name;
+      console.log("Account Name:", name);
+      return name;
+    } catch (error) {
+      console.error("Error fetching account details:", error);
+      return null;
+    }
+  };
+
+  React.useEffect(() => {
+    fetchAccountName().then((accountName) => {
+      return setName(accountName);
+    });
+  }, []);
 
   const handleToggle = (event: any) => {
     event.preventDefault();
@@ -45,7 +63,7 @@ export default function PageLayout() {
               <span>
                 <RxAvatar size={20} />
               </span>
-              <span className="ml-2">Osazie</span>
+              <span className="ml-2 capitalize">{name}</span>
             </a>
           </li>
         </ul>

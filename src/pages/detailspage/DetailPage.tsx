@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { databases } from "../../Api/api";
 import RecipeImage from "./Image";
 import ReciepeCategory from "./ReciepeCategory";
@@ -12,6 +12,9 @@ import RecipeReviews from "./reciepeReview";
 import PageLayout from "../../Components/pageLayout";
 import Footer from "../../Components/Footer";
 import { v4 as uuidV4 } from "uuid";
+import RecipeCommentForm from "./Form";
+import { toast } from "react-hot-toast";
+import { Query } from "appwrite";
 
 interface Recipe {
   id: string;
@@ -47,6 +50,7 @@ const reviews = [
 ];
 
 const RecipeDetailsPage: React.FC = () => {
+  // const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +65,7 @@ const RecipeDetailsPage: React.FC = () => {
             id
           );
 
-          console.log(response); // Log the response object to check its structure
+          // console.log(response); // Log the response object to check its structure
 
           // Check if response is valid
           if (
@@ -100,12 +104,14 @@ const RecipeDetailsPage: React.FC = () => {
               dietaryPreferences,
             };
             setRecipe(recipeData);
+            toast.success("recipe successfully added logged");
           } else {
             setError("Invalid recipe data");
           }
         }
       } catch (error) {
         setError("Error fetching recipe details");
+        toast.error("fill the right details");
         console.log("Error fetching recipe details:", error);
       }
     };
@@ -113,28 +119,49 @@ const RecipeDetailsPage: React.FC = () => {
     fetchRecipeDetails();
   }, [id]);
 
-  const saveRecipe = async (event: React.MouseEvent<HTMLDivElement>) => {
-    const recipe = event.currentTarget.dataset.recipe;
-
+  const likeRecipe = async () => {
     try {
-      const id = uuidV4(); // Replace with a valid unique identifier for the recipe
+      if (!id) {
+        console.error("Invalid document ID");
+        return;
+      }
 
-      if (id && recipe) {
-        const response = await databases.createDocument(
-          "646cb6c47bc7998e9c74",
-          "646f1e990583375ff5d2",
-          id,
-          {
-            recipeTitle: recipe, // Provide the recipe data as the 'data' parameter
-          }
+      // Fetch the document using a database query or any other method
+      const fetchedDocument = await databases.getDocument(
+        "646cb6c47bc7998e9c74", // Replace with your collection ID
+        "646f1e990583375ff5d2", // Replace with your document ID
+        id
+      );
+
+      if (!fetchedDocument) {
+        console.error("Document not found");
+        return;
+      }
+      console.log(fetchedDocument);
+      // Extract the document ID from the fetched document
+      const documentId = fetchedDocument.$id;
+      console.log(documentId)
+
+      if (documentId) {
+        // Update the document with the desired changes
+        const updatedDocument = {
+          ...fetchedDocument,
+          likes: (fetchedDocument.likes ? Number(fetchedDocument.likes) : 0) + 1 + "",
+        };
+
+        const response = await databases.updateDocument(
+          "646cb6c47bc7998e9c74", // Replace with your collection ID
+          "646f1e990583375ff5d2", // Replace with your document ID
+          documentId,
+          updatedDocument
         );
 
-        console.log("Recipe saved:", response);
+        console.log("Document updated:", response);
       } else {
-        console.error("Invalid recipe ID or recipe data");
+        console.error("Document ID not found");
       }
     } catch (error) {
-      console.error("Error saving recipe:", error);
+      console.error("Error fetching or updating document:", error);
     }
   };
 
@@ -153,7 +180,7 @@ const RecipeDetailsPage: React.FC = () => {
                   imageUrl={recipe.image}
                   altText={recipe.recipeTitle}
                 />
-                <div onClick={saveRecipe}>Save</div>
+                <button onClick={likeRecipe}>Like</button>
               </div>
               <div className="bg-white rounded-lg p-4 grid grid-cols-2 gap-2 md:grid-cols-2">
                 <RecipeCookingTime cookingTime={recipe.cookingTime} />
@@ -170,6 +197,9 @@ const RecipeDetailsPage: React.FC = () => {
             </div>
             <div className="mt-4">
               <RecipeInstructions instructions={recipe.instructions} />
+            </div>
+            <div>
+              {/* <RecipeCommentForm onSubmit={updateDocumentWithComment} /> */}
             </div>
 
             <RecipeReviews reviews={reviews} />

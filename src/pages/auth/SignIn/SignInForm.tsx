@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault();
     try {
       await account.createEmailSession(user.email, user.password);
-      const loggedInUser = { email: user.email }; // Create a user object with relevant data
+      const loggedInUser = { email: user.email, name: user.password }; // Create a user object with relevant data
       dispatch(setUserdata(loggedInUser));
       navigate("/exploremore");
     } catch (error) {

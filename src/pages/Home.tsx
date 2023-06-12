@@ -148,11 +148,11 @@ export default function Home() {
             {/* Display featured recipe cards */}
           </div>
         </div>
-        <div className="popular-categories flex w-full flex-col justify-center items-center mt-8 ">
+        {/* <div className="popular-categories flex w-full flex-col justify-center items-center mt-8 ">
           <h2 className="text-2xl font-bold mb-6">Popular Categories</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
             {/* Display popular categories */}
-            <div className="category bg-white p-6 rounded shadow">
+        {/* <div className="category bg-white p-6 rounded shadow">
               <img
                 src="category-icon.jpg"
                 alt="Category"
@@ -197,7 +197,8 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
+        {/* </div> */}
       </div>
       <Footer />
     </>

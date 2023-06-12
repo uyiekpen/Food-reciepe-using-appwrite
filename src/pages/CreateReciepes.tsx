@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { fetchRecipesStart } from "../global/reciepeReducer";
+import { toast } from "react-hot-toast";
 
 const CreateRecipes = () => {
   const navigate = useNavigate();
@@ -34,9 +35,8 @@ const CreateRecipes = () => {
     }
 
     try {
-    
       const documentId = uuidv4(); // Generate a unique ID for the document
-        console.log("Generated document ID:", documentId);
+      console.log("Generated document ID:", documentId);
 
       // Upload the file to Appwrite storage
       const fileResult = await storage.createFile(
@@ -69,6 +69,7 @@ const CreateRecipes = () => {
       );
 
       console.log("Upload successful:", response);
+      toast.success("recipe has been uploaded successfully");
       navigate("/exploremore");
 
       // Reset form fields
@@ -83,6 +84,7 @@ const CreateRecipes = () => {
       setTags([]);
     } catch (error: any) {
       console.error("Upload error:", error);
+      toast.error("Error", error);
     }
   };
 
