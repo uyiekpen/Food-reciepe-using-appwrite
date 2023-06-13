@@ -119,52 +119,6 @@ const RecipeDetailsPage: React.FC = () => {
     fetchRecipeDetails();
   }, [id]);
 
-  const likeRecipe = async () => {
-    try {
-      if (!id) {
-        console.error("Invalid document ID");
-        return;
-      }
-
-      // Fetch the document using a database query or any other method
-      const fetchedDocument = await databases.getDocument(
-        "646cb6c47bc7998e9c74", // Replace with your collection ID
-        "646f1e990583375ff5d2", // Replace with your document ID
-        id
-      );
-
-      if (!fetchedDocument) {
-        console.error("Document not found");
-        return;
-      }
-      console.log(fetchedDocument);
-      // Extract the document ID from the fetched document
-      const documentId = fetchedDocument.$id;
-      console.log(documentId)
-
-      if (documentId) {
-        // Update the document with the desired changes
-        const updatedDocument = {
-          ...fetchedDocument,
-          likes: (fetchedDocument.likes ? Number(fetchedDocument.likes) : 0) + 1 + "",
-        };
-
-        const response = await databases.updateDocument(
-          "646cb6c47bc7998e9c74", // Replace with your collection ID
-          "646f1e990583375ff5d2", // Replace with your document ID
-          documentId,
-          updatedDocument
-        );
-
-        console.log("Document updated:", response);
-      } else {
-        console.error("Document ID not found");
-      }
-    } catch (error) {
-      console.error("Error fetching or updating document:", error);
-    }
-  };
-
   return (
     <>
       <PageLayout />
@@ -180,7 +134,7 @@ const RecipeDetailsPage: React.FC = () => {
                   imageUrl={recipe.image}
                   altText={recipe.recipeTitle}
                 />
-                <button onClick={likeRecipe}>Like</button>
+                {/* <button onClick={fetchData}>Like</button> */}
               </div>
               <div className="bg-white rounded-lg p-4 grid grid-cols-2 gap-2 md:grid-cols-2">
                 <RecipeCookingTime cookingTime={recipe.cookingTime} />
@@ -198,9 +152,7 @@ const RecipeDetailsPage: React.FC = () => {
             <div className="mt-4">
               <RecipeInstructions instructions={recipe.instructions} />
             </div>
-            <div>
-              {/* <RecipeCommentForm onSubmit={updateDocumentWithComment} /> */}
-            </div>
+            <div>{/* <RecipeCommentForm onSubmit={fetchData} /> */}</div>
 
             <RecipeReviews reviews={reviews} />
           </>

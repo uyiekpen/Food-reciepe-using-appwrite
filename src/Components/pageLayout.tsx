@@ -3,6 +3,7 @@ import { BiSearchAlt2 } from "react-icons/bi";
 import { RxAvatar } from "react-icons/rx";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { account } from "../Api/api";
+import { Link } from "react-router-dom";
 
 export default function PageLayout() {
   const [toggle, setToggle] = useState(false);
@@ -33,7 +34,10 @@ export default function PageLayout() {
 
   return (
     <header className="flex justify-between items-center px-8 bg-reciepeGreen text-white w-full h-20 z-10 font-poppins">
-      <div>FoodRecipes..</div>
+      <Link to="/exploremore">
+        {" "}
+        <div>FoodRecipes..</div>
+      </Link>
       {/* <label className="relative md:block hidden md:min-w-[400px]">
         <span className="sr-only">Search</span>
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -104,7 +108,7 @@ export default function PageLayout() {
                 <span>
                   <RxAvatar size={20} />
                 </span>
-                <span className="ml-2">Osazie</span>
+                <span className="ml-2 capitalize">{name}</span>
               </a>
             </li>
           </ul>
